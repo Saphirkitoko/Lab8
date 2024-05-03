@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cart</title>
+
+    <!-- Importing Vue.js library -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Styling for table -->
+    <style>
+        td, th {
+            width: 25%;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <h1>Example Shopping Cart</h1>
+
+    <!-- Table to display item details -->
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <!-- Displaying item name -->
+            <td>{{ name }}</td>
+            <!-- Displaying unit price -->
+            <td>${{ unitPrice }}</td>
+            <!-- Input field for quantity -->
+            <td>
+                <input type="number" v-model="quantity">
+            </td>
+            <!-- Calculated total price -->
+            <td> ${{ total }} </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+
+    const { createApp, ref, computed } = Vue
+
+    createApp({
+        setup() {
+
+            // Reactive variables
+            const name = ref('Hat')  // Item name
+            const quantity = ref(1)   // Quantity of item
+            const unitPrice = ref(4.99)  // Unit price of item
+
+            // Calculated total price based on quantity and unit price
+            const total = computed( () => {
+                const totalPrice = quantity.value * unitPrice.value  // Calculating total price
+                const formattedPrice = totalPrice.toFixed(2)        // Formatting total price with 2 decimal places
+                return formattedPrice                               // Returning formatted total price
+            })
+
+            return {
+                // Exposing reactive variables and computed properties to template
+                name,
+                quantity,
+                unitPrice,
+                total
+            }
+        }
+    }).mount('#app')
+
+
+</script>
+
+</body>
+
+</html>
+
